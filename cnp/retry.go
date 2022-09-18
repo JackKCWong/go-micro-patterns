@@ -2,9 +2,9 @@ package cnp
 
 import "time"
 
-func Retry(op func() (interface{}, error), retryCount int) (interface{}, error) {
+func Retry[T any](op func() (T, error), retryCount int) (T, error) {
 	var err error
-	var result interface{}
+	var result T
 	for i := 0; i < retryCount; i++ {
 		result, err = op()
 		if err == nil {
@@ -14,9 +14,9 @@ func Retry(op func() (interface{}, error), retryCount int) (interface{}, error) 
 	return result, err
 }
 
-func RetryWithInterval(op func() (interface{}, error), retryCount int, interval time.Duration) (interface{}, error) {
+func RetryWithInterval[T any](op func() (T, error), retryCount int, interval time.Duration) (T, error) {
 	var err error
-	var result interface{}
+	var result T
 	for i := 0; i < retryCount; i++ {
 		result, err = op()
 		if err == nil {
@@ -27,9 +27,9 @@ func RetryWithInterval(op func() (interface{}, error), retryCount int, interval 
 	return result, err
 }
 
-func RetryWithBackoff(op func() (interface{}, error), retryCount int, initialBackoff time.Duration) (interface{}, error) {
+func RetryWithBackoff[T any](op func() (T, error), retryCount int, initialBackoff time.Duration) (T, error) {
 	var err error
-	var result interface{}
+	var result T
 	var expBackoff time.Duration = initialBackoff
 	for i := 0; i < retryCount; i++ {
 		result, err = op()

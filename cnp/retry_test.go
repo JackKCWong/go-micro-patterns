@@ -35,10 +35,10 @@ func TestRetryWithInterval(t *testing.T) {
 	cnt := &Counter{}
 
 	started := time.Now()
-	result, err := RetryWithInterval(func() (interface{}, error) {
+	result, err := RetryWithInterval(func() (int, error) {
 		if cnt.count < 3 {
 			cnt.Increment()
-			return nil, fmt.Errorf("simulate error")
+			return 0, fmt.Errorf("simulate error")
 		}
 
 		return cnt.count, nil
@@ -55,10 +55,10 @@ func TestRetryWithBackoff(t *testing.T) {
 	cnt := &Counter{}
 
 	started := time.Now()
-	result, err := RetryWithBackoff(func() (interface{}, error) {
+	result, err := RetryWithBackoff(func() (int, error) {
 		if cnt.count < 3 {
 			cnt.Increment()
-			return nil, fmt.Errorf("simulate error")
+			return 0, fmt.Errorf("simulate error")
 		}
 
 		return cnt.count, nil
